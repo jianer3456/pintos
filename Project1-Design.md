@@ -67,7 +67,11 @@ Brief description:
     + #define NICE_DEFAULT 0
     + #define NICE_MAX 20
     + int load_avg: The system load average.
-    + static struct queueList all_queues: a struct to gather 64 priority queues which is struct list.
+    + int *ready_list_end: a pointer point to the end of ready_list last 4 ticks.
+    + static struct queue_list all_queues: a struct to gather 64 priority queues which is struct list.
+    + fixed_point_t recalculate_per_4_ticks(struct thread \*thread): recalculate a thread's priority when per 4 ticks.
+    + fixed_point_t recalculate_per_100_ticks(struct thread \*thread): recalculate a thread's priority when per 100 ticks.
+    + void reorder_queue_list(struct queueList all_queues): to configure all ready threads in different piority queue.
 
 + *Modify:* 
     + static struct thread *next_thread_to_run (void) 
@@ -75,9 +79,20 @@ Brief description:
     + int thread_get_nice (void)
     + int thread_get_load_avg (void)
     + int thread_get_recent_cpu (void) 
+   
 
 ### 2. Algorithms
-Brief description: 
+Brief description: The function *next_thread_to_run()* will return the first thread in the largest priority queue which is not null. The function reorder_queue_list will call *recalculate_per_4_ticks()* per 4 ticks and call *recalculate_per_100_ticks()* per 100 ticks to reorder the queue list.
+    + **next_thread_to_run():**
+       Use for loop to find the first thread in all_queues.
+    + **reorder_queue_list():**
+       When per 4 ticks, call the *recalculate_per_4_ticks()* to calculate the priority of current thread then insert it into the end of  corresponding priority queue. What's more, call the *recalculate_per_4_ticks()* to update the priority of the new one in ready_list by *ready_list_end* then insert. When per 100 ticks, call *thread_foreach(recalculate_per_100_ticks, null)* to update all the priority of all thread. Then configure the thread in *ready_list* into *all_queues* .
+    + **recalculate_per_4_ticks():**
+       Use the formular *priority = PRI_MAX - (recent_cpu/4) - (nice*2)* to calculate the priority of the thread.
+    + **recalculate_per_100_ticks():**
+       Use the formular *load_avg = (59/60)*load_avg + (1/60)*ready_threas* to update load_avg.
+       Use the formular *recent_cpu = (2*load_avg)/(2*load_avg+1)*recent_cpu + nice* to update recent_cpu.
+       Use the formular *priority = PRI_MAX - (recent_cpu/4) - (nice*2)* to calculate the priority of the thread.
 
 ### 3. Synchronization
 ### 4. Rationale
