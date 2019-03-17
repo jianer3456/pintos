@@ -18,6 +18,7 @@
 
 Brief description:
     Add a new variable *ticks_sleep* in *struct thread* to record the sleeping time of a thread. Then modify the *timer_sleep()* which is blocking a thread instead of calling *thread_yield()*. When sleeping time over, unblocking it.
+  
   + **timer_sleep():**
     
        At first, modify the ticks_sleep in the thread. 
@@ -83,13 +84,14 @@ Brief description:
 
 ### 2. Algorithms
 Brief description: The function *next_thread_to_run()* will return the first thread in the largest priority queue which is not null. The function reorder_queue_list will call *recalculate_per_4_ticks()* per 4 ticks and call *recalculate_per_100_ticks()* per 100 ticks to reorder the queue list.
-    + **next_thread_to_run():**
+    
+   + **next_thread_to_run():**
        Use for loop to find the first thread in all_queues.
-    + **reorder_queue_list():**
+   + **reorder_queue_list():**
        When per 4 ticks, call the *recalculate_per_4_ticks()* to calculate the priority of current thread then insert it into the end of  corresponding priority queue. What's more, call the *recalculate_per_4_ticks()* to update the priority of the new one in ready_list by *ready_list_end* then insert. When per 100 ticks, call *thread_foreach(recalculate_per_100_ticks, null)* to update all the priority of all thread. Then configure the thread in *ready_list* into *all_queues* .
-    + **recalculate_per_4_ticks():**
+   + **recalculate_per_4_ticks():**
        Use the formular *priority = PRI_MAX - (recent_cpu/4) - (nice*2)* to calculate the priority of the thread.
-    + **recalculate_per_100_ticks():**
+   + **recalculate_per_100_ticks():**
        Use the formular *load_avg = (59/60)*load_avg + (1/60)*ready_threas* to update load_avg.
        Use the formular *recent_cpu = (2*load_avg)/(2*load_avg+1)*recent_cpu + nice* to update recent_cpu.
        Use the formular *priority = PRI_MAX - (recent_cpu/4) - (nice*2)* to calculate the priority of the thread.
