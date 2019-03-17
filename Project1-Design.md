@@ -55,4 +55,20 @@ Brief description:
 ### 3. Synchronization
 ### 4. Rationale
 
+ 
+ ## Task 3: Priority Scheduler
+ ### 1. Data structures and functions
 
++ *Add:*
+
+
++ *Modify:* 
+
+
+### 2. Algorithms
+
+Brief description:
+
+
+### 3. Synchronization
+### 4. Rationale
