@@ -1,5 +1,5 @@
 # Project Design
-  There are 4 tasks in this project.
+  There are 3 tasks in this project.
 ## Task 1: Efficient Alarm Clock
 ### 1. Data structures and functions
 
@@ -97,9 +97,11 @@ Brief description: The function *next_thread_to_run()* will return the first thr
        Use the formular *priority = PRI_MAX - (recent_cpu/4) - (nice*2)* to calculate the priority of the thread.
 
 ### 3. Synchronization
+  It considers when new threads put into the ready_list.
 ### 4. Rationale
-
-## Additional Questions
+  At first, I want to gather 64 queues into one. However, when finding a target priority thread, its efficiency will lower than 64 queues. It's because when searching in loop, the same priority thread can not be skiped.
+  
+## Additional Questions 
 
 1. 
 timer ticks|R(A)|R(B)|R(C)|P(A)|P(B)|P(C)|thread to run
