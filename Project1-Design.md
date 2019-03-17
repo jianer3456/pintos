@@ -60,8 +60,12 @@ Brief description:
  ### 1. Data structures and functions
 
 + *Add:*
-
-
+    + int nice                             
+    + int recent_cpu
+    + #define NICE_MIN -20
+    + #define NICE_DEFAULT 0
+    + #define NICE_MAX 20
+    + int load_avg
 + *Modify:* 
 
 
@@ -89,20 +93,5 @@ timer ticks|R(A)|R(B)|R(C)|P(A)|P(B)|P(C)|thread to run
 32|16|12|4|59|58|58|A
 36|20|12|4|58|58|58|C (Round Robin)
 
- recent_cpu here is ambiguous here. When we calculate recent_cpu, we did not 
-
-consider the time that CPU spends on the calculations every 4 ticks, like 
-
-load_avg, recent_cpu for all threads, priority for all threads in all_list, 
-
-resort the ready_list. When CPU does these calculations, the current thread needs 
-
-to yield, and not running. Thus, every 4 ticks, the real ticks that is added to 
-
-recent_cpu (recent_cpu is added 1 every ticks) is not really 4 ticks -- less than 
-
-4 ticks. But we could not figure out how much time it spends. What we did was 
-
-adding 4 ticks to recent_cpu every 4 ticks.
 
  2. The recent_time is ambiguities because when a thread running with interruption that calculate recent_cpu, priority of all threads or resort ready_list, this current thread will yield. Therefore, the recent_cpu will be less than 4 ticks per 4 ticks. However, it is hard to figure out the calculation time so it still add 4 per 4 ticks.
