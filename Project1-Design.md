@@ -37,6 +37,7 @@ Brief description:
     
  ### 4. Rationale
  
+   I didn't think about using a order list to store sleeping threads at the first. However, when a thread call *timer_sleep()* with a sleeping thread, it dosen't make sense. So it is reasonable and necessary to use list to store sleeping thread. What's more, it is a order list so it can reduce the calculation time in *timer_interrupt()* .
  
  ## Task 2: Priority Scheduler
  ### 1. Data structures and functions
@@ -60,19 +61,23 @@ Brief description:
  ### 1. Data structures and functions
 
 + *Add:*
-    + int nice                             
-    + int recent_cpu
+    + int nice: The value of nice.                            
+    + int recent_cpu: The recent time running on cpu of a thread.
     + #define NICE_MIN -20
     + #define NICE_DEFAULT 0
     + #define NICE_MAX 20
-    + int load_avg
-+ *Modify:* 
+    + int load_avg: The system load average.
+    + static struct queueList all_queues: a struct to gather 64 priority queues which is struct list.
 
++ *Modify:* 
+    + static struct thread *next_thread_to_run (void) 
+    + void thread_set_nice (int nice UNUSED)
+    + int thread_get_nice (void)
+    + int thread_get_load_avg (void)
+    + int thread_get_recent_cpu (void) 
 
 ### 2. Algorithms
-
-Brief description:
-
+Brief description: 
 
 ### 3. Synchronization
 ### 4. Rationale
