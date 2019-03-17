@@ -56,7 +56,7 @@ Brief description:
 ### 4. Rationale
 
  
- ## Task 3: Priority Scheduler
+ ## Task 3: MLFQS
  ### 1. Data structures and functions
 
 + *Add:*
@@ -72,3 +72,12 @@ Brief description:
 
 ### 3. Synchronization
 ### 4. Rationale
+
+## Additional Questions
+
+1. 
+timer ticks|R(A)|R(B)|R(C)|P(A)|P(B)|P(C)|thread to run
+--|:--:|:--:|:--:|:--:|:--:|:--:|--:
+0|0|0|0|63|61|59
+
+ 
